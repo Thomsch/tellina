@@ -90,7 +90,7 @@
     font-weight: 400;
 }
 .panel-google-plus > .panel-body {
-    padding-top: 5px;
+    padding-top: 0px;
     font-size: 13px;
 }
 .panel-google-plus > .panel-body > .panel-google-plus-image {
