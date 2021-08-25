@@ -26,7 +26,6 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li class="example-or-recently-asked"><a class="example-or-recently-asked-text-display">Sample Questions</a></li>
                                 <li><a href="developers">About</a></li>
                             </ul>
                         </div>
@@ -39,8 +38,8 @@
         <div class="container-fluid pt-sm pt-xs body-panel">
             <div class="row">
                 <div class="col-md-8 col-xs-12 col-sm-12">
-                    <div class="example-panel animated fadeInUp" style="display:none;"></div>
-                    <div class="recently-asked-panel animated fadeInUp"></div>
+                    <div class="example-panel animated fadeInUp"></div>
+                    <div class="recently-asked-panel animated fadeInUp" style="display:none;"></div>
                 </div>
 
                 <div class="col-md-4 col-xs-12 col-sm-12 hidden-xs">
@@ -53,7 +52,6 @@
                                 <ul>
                                     <li><i>"split &lsquo;/usr/bin/gcc&rsquo; into 1000 files of about equal size";</i></li>
                                     <li><i>"print top 10 largest files and directories";</i></li>
-                                    <li><a class="example-or-recently-asked">more examples...</a></li>
                                 </ul>
                             </li>
                             <li>Tellina works best when the input is specific. For example,
@@ -96,11 +94,11 @@
 
                 $(".nl-request-input").focus()
 
-                // load recently asked
-                $.get("load_latest_requests_with_translations", function(data) {
-                    display_pairs($('.recently-asked-panel'), data.latest_requests_with_translations,
-                                  'Recently Asked Questions', true); 
-                });
+                // load sample questions
+		$.get("load_example_requests_with_translations", function(data) {
+                    display_pairs($('.example-panel'), data.example_requests_with_translations,
+                                  'Sample Questions', false);
+		});
 
                 // fix instruction panel during scroll
                 // fix header during scroll
