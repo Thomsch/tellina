@@ -83,12 +83,7 @@
         <script src="/static/lib/hljs.themes/bash.js"></script>
         <script>
             // get user's ip address as a global variable
-            var ip_address = '';
-            $.get("http://ipinfo.io", function(response) {
-                ip_address = response.ip;
-                $.get(`/remember_ip_address`, {ip_address: ip_address});
-                console.log('INDEX - IP Address for study session logged: ' + ip_address);
-            }, "jsonp");
+            var ip_address = '0.0.0.0';
 
             $(document).ready(function () {
                 console.log(window.location.hash);
