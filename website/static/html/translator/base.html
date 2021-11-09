@@ -17,15 +17,6 @@
         <link rel="canonical" href="http://tellina.rocks">
         {% block head %}{% endblock %}
         
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-108707366-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'UA-108707366-1');
-        </script>
     </head>
 
     <body>
@@ -68,12 +59,7 @@
         <script>
             $(document).ready(function () {
                 // get user's ip address as a global variable
-                var ip_address = '';
-                $.get("http://ipinfo.io", function(response) {
-                    ip_address = response.ip;
-                    $.get(`/remember_ip_address`, {ip_address: ip_address});
-                    console.log('BASE - IP Address for study session logged: ' + ip_address);
-                }, "jsonp");
+                var ip_address = '0.0.0.0';
 
                 // fix header during scroll
                 $(window).scroll(function(){
