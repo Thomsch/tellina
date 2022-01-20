@@ -25,8 +25,7 @@ SECRET_KEY = '*zca^nlaejb32n)5@cevdlsb@g3ea4in=x_k1x9we788v&6k5r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['kirin.cs.washington.edu', '205.175.118.26', 
-                 '69.91.132.97']
+ALLOWED_HOSTS = ['kirin.cs.washington.edu']
 
 # Localhosts
 ALLOWED_HOSTS.extend(['127.0.0.1','0.0.0.0', 'localhost'])
