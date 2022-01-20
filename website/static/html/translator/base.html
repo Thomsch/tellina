@@ -72,7 +72,7 @@
                 $.get("http://ipinfo.io", function(response) {
                     ip_address = response.ip;
                     $.get(`/remember_ip_address`, {ip_address: ip_address});
-                    console.log('IP Address for study session logged: ' + ip_address);
+                    console.log('BASE - IP Address for study session logged: ' + ip_address);
                 }, "jsonp");
 
                 // fix header during scroll
