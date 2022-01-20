@@ -1,4 +1,3 @@
-import html
 import numpy as np
 import os, sys
 import requests
