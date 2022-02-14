@@ -26,7 +26,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
-                                <li class="example-or-recently-asked"><a class="example-or-recently-asked-text-display">Sample TODOs</a></li>
+                                <li class="example-or-recently-asked"><a class="example-or-recently-asked-text-display">Sample Questions</a></li>
                                 <li><a href="developers">About</a></li>
                             </ul>
                         </div>
@@ -38,40 +38,38 @@
     {% block body %}
         <div class="container-fluid pt-sm pt-xs body-panel">
             <div class="row">
-                <div class="col-md-5 col-xs-12 col-sm-12 hidden-xs">
+                <div class="col-md-8 col-xs-12 col-sm-12">
+                    <div class="example-panel animated fadeInUp" style="display:none;"></div>
+                    <div class="recently-asked-panel animated fadeInUp"></div>
+                </div>
+
+                <div class="col-md-4 col-xs-12 col-sm-12 hidden-xs">
                     <div class="well instruction-panel">
-                        <h1>Commanding your terminal with natural language</h1>
-
-                        <h2>Tellina automatically translates the input into executable bash commands using deep learning.
-                        </h2>
-
-                        <div class="tiny-push"></div>
+                        <h5 style="margin-top: 6px">Tips
+                        </h5>
 
                         <ul>
-                            <li>Type an imperative English sentence (not a question) stating your goal. For example,
+                            <li>Express your goal in English and get its Bash translation. For example,
                                 <ul>
                                     <li><i>"split &lsquo;/usr/bin/gcc&rsquo; into 1000 files of about equal size";</i></li>
                                     <li><i>"print top 10 largest files and directories";</i></li>
                                     <li><a class="example-or-recently-asked">more examples...</a></li>
                                 </ul>
                             </li>
-                            <li>Tellina works best for specific inputs. For example,
+                            <li>Tellina works best when the input is specific. For example,
                                 <ul>
                                     <li>instead of "some files", use "pdf files";</li>
                                     <li>instead of "sometime ago", use "5 days ago".</li>
                                 </ul>
                             </li>
-                            <li>Quoting <code>""</code> names, strings and regular expressions often improves the translation.</li>
+                            <li>Quoting <code>""</code> names, strings and regular expressions can improve the translation.</li>
                             <li>Put <code>/</code> at the end of a directory name such that Tellina interprets it as a folder.</li>
                         </ul>
                     </div>
                     <footer class="hidden-xs hidden-sm">
-                        <div class="footer"><small>&copy; Tellina Tools 2018-2020. This website is under active construction. If you have any suggestions, <a href="mailto:xilin@cs.washington.edu?Subject=Tellina%20Website" target="_top">email us</a> or issue a pull request on <a href="https://github.com/TellinaTool/tellina">Github</a>.</small></div>
+                        <div class="footer"><small>&copy; Tellina Tools 2018-2020. If you have any suggestions about the project, <a href="mailto:xilin@cs.washington.edu?Subject=Tellina%20Website" target="_top">email us</a> or issue a pull request on <a href="https://github.com/TellinaTool/tellina">Github</a>.
+                        </small></div>
                     </footer>
-                </div>
-                <div class="col-md-7 col-xs-12 col-sm-12">
-                    <div class="example-panel animated fadeInUp" style="display:none;"></div>
-                    <div class="recently-asked-panel animated fadeInUp"></div>
                 </div>
             </div>
         </div>
@@ -102,7 +100,7 @@
                 // load recently asked
                 $.get("load_latest_requests_with_translations", function(data) {
                     display_pairs($('.recently-asked-panel'), data.latest_requests_with_translations,
-                                  true); 
+                                  'Recently Asked Questions', true); 
                 });
 
                 // fix instruction panel during scroll
@@ -122,26 +120,26 @@
                         $('.recently-asked-panel').hide();
                         $.get("load_example_requests_with_translations", function(data) {
                             display_pairs($('.example-panel'), data.example_requests_with_translations,
-                                          false);
+                                          'Sample Questions', false);
                         });
                         $('.example-panel').show();
-                        $('.example-or-recently-asked-text-display').text('Recently Issued');
+                        $('.example-or-recently-asked-text-display').text('Recently Asked');
                         recently_asked = false;
                     } else {
                         $('.example-panel').hide();
                         $.get("load_latest_requests_with_translations", function(data) {    
                             display_pairs($('.recently-asked-panel'), data.latest_requests_with_translations,
-                                          true);
+                                          'Recently Asked Questions', true);
                         });
                         $('.recently-asked-panel').show();
-                        $('.example-or-recently-asked-text-display').text('Sample TODOs');
+                        $('.example-or-recently-asked-text-display').text('Sample Questions');
                         recently_asked = true;
                     }
                 });
             });
 
-            function display_pairs(panel_obj, data_points, show_user_credentials) {
-                panel_obj.html('');
+            function display_pairs(panel_obj, data_points, panel_header, show_user_credentials) {
+                panel_obj.html('<div style="text-align:left; margin-top: -6px;font-size: 15px;"><h5>' + panel_header + '</h5></div>');
                 for (var i = 0; i < data_points.length; i ++) {
                     var data_point = data_points[i];
                     var panel_request = '';
@@ -169,8 +167,8 @@
                             '</button>&nbsp;&nbsp;';
                     }
                     panel_tags = panel_tags +
-                        '<button type="button" class="btn btn-top-k btn-xs expand-translation-instance">' +
-                            'More like this' +
+                        '<button type="button" class="btn btn-top-k btn-xs expand-translation-instance" data-original-title="show top 20 translations">' +
+                            '<span class="[ fa fa-arrows-alt ]"></span>' +
                         '</button>&nbsp;&nbsp;' 
                     panel_tags = panel_tags + '</div>'
                     panel_obj.append(
@@ -213,6 +211,10 @@
                         console.log(nl_request_str);
                         window.location.replace(`translate?request_str=${nl_request_str}&ip_address=${ip_address}`);
                     });
+                     $('.btn-top-k').tooltip({
+                        placement: 'bottom'
+                    });
+
                 }
             }
         </script>
