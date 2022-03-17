@@ -17,7 +17,7 @@ from encoder_decoder import decode_tools
 from encoder_decoder import parse_args
 from encoder_decoder import translate
 
-CPU_ONLY=True
+CPU_ONLY=False
 if CPU_ONLY:
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 else:
