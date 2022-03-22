@@ -43,8 +43,7 @@ def ip_address_required(f):
 
 
 @csrf_protect
-@ip_address_required
-def translate(request, ip_address):
+def translate(request, ip_address='123.456.789.012'):
     template = loader.get_template('translator/translate.html')
     if request.method == 'POST':
         request_str = request.POST.get('request_str')
@@ -92,6 +91,7 @@ def translate(request, ip_address):
             city = '--' if r.json()['city'] is None else r.json()['city']
             region = '--' if r.json()['region'] is None else r.json()['region']
             country = '--' if r.json()['country'] is None else r.json()['country']
+        
         user = User.objects.create(
             ip_address=ip_address,
             organization=organization,
