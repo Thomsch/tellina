@@ -15,7 +15,7 @@ submodule:
 db:
 	# Setup database tables
 	python3 manage.py makemigrations website
-	python3 manage.py migrate
+	python3 manage.py migrate --fake-initial
 
 run: 
 	# Set CUDAPATH

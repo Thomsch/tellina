@@ -2,7 +2,7 @@
 Interface to the neural translation model.
 """
 import tensorflow as tf
-tf.compat.v1.disable_eager_execution()
+# tf.compat.v1.disable_eager_execution()
 
 import os
 import sys
@@ -17,15 +17,18 @@ from encoder_decoder import decode_tools
 from encoder_decoder import parse_args
 from encoder_decoder import translate
 
-CPU_ONLY=True
+CPU_ONLY=False
 if CPU_ONLY:
     os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 else:
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 
 # initialize FLAGS by parsing a dummy argument list
-tf.compat.v1.flags.FLAGS(sys.argv[:1])
-FLAGS = tf.compat.v1.flags.FLAGS
+# tf.compat.v1.flags.FLAGS(sys.argv[:1])
+# FLAGS = tf.compat.v1.flags.FLAGS
+if tf.__version__.startswith('1.'):
+    tf.app.flags.FLAGS(sys.argv[:1])
+    FLAGS = tf.app.flags.FLAGS
 
 FLAGS.demo = True
 FLAGS.fill_argument_slots = False
@@ -72,8 +75,12 @@ FLAGS.max_tg_token_size = 100
 buckets = [(13, 57), (18, 57), (42, 57)]
 
 # Create tensorflow session
-sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(allow_soft_placement=True,
-    log_device_placement=FLAGS.log_device_placement))
+if tf.__version__.startswith('1.'):
+    sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True,
+        log_device_placement=FLAGS.log_device_placement))
+else:
+    sess = tf.compat.v1.Session(config=tf.compat.v1.ConfigProto(allow_soft_placement=True,
+        log_device_placement=FLAGS.log_device_placement))
 
 # create model and load nerual model parameters.
 model = translate.define_model(sess, forward_only=True, buckets=buckets)

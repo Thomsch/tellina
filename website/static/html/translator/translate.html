@@ -40,7 +40,7 @@
                                     <button type="button" class="btn btn-default btn-expl"
                                         id="expl-btn-{{forloop.counter}}"
                                         onclick="window.open('http://explainshell.com/explain?cmd={{to_expl_cmd}}')">
-                                        <i class="fa fa-question-circle-o fa-lg"></i>
+                                        <i class="fa fa-list"></i>
                                     </button>
                                 </div>
                             </td>
@@ -82,7 +82,7 @@
 
         // set tooltip for each span inside command
         $('.command span').tooltip({
-            placement: 'bottom',
+            placement: 'top',
             html: true,
             // Hover over the tooltip will trigger the code to access the code
             title: function () {
@@ -166,7 +166,7 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $('.btn-copy').tooltip({
-            placement: 'top'
+            placement: 'bottom'
         });
         $('.btn-expl').tooltip({
             placement: 'bottom'

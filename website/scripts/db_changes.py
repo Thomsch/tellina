@@ -5,7 +5,7 @@ import re
 import sqlite3
 
 from website.models import Annotation, AnnotationUpdate, Command, \
-    Notification, URL, URLTag
+    Notification, Tag, URL, URLTag
 from website.utils import get_tag, get_command, get_url
 
 learning_module_dir = os.path.join(os.path.dirname(__file__), '..', '..',
@@ -93,11 +93,28 @@ def populate_command_template():
             cmd.template = template
             cmd.save()
 
+def compute_tag_frequency():
+    for tag in Tag.objects.all():
+        tag.frequency = 0
+    for cmd in Command.objects.all():
+        max_tag_length = 0
+        for tag in cmd.tags.all():
+            tag.frequency += 1
+            if len(tag.str) > max_tag_length:
+                max_tag_length = len(tag.str)
+        if max_tag_length > 20:
+            for tag in cmd.tags.all():
+                tag.frequency -= 1
+            cmd.delete()
+            print('delete command: {}'.format(cmd.str))
+    for tag in Tag.objects.all():
+        tag.save()
+        print('{}: {}'.format(tag.str, tag.frequency))
+ 
 def populate_tag_commands():
     for tag in Tag.objects.all():
         tag.commands.clear()
     for url_tag in URLTag.objects.all():
-        print(url_tag.url.str)
         tag = get_tag(url_tag.tag)
         for cmd in url_tag.url.commands.all():
             if tag in cmd.tags.all():
