@@ -127,7 +127,13 @@
     });
 </script>
 <script>
-    var clipboard = new Clipboard('.btn-copy');
+    var clipboard = new Clipboard('.btn-copy', {
+        text: function(trigger) {
+            targetId = trigger.getAttribute("data-clipboard-target")
+            target = document.querySelector(targetId)
+            return target.innerText.trim();
+        }
+    });
 
     function setTooltip(btn, message) {
         $(btn).tooltip('hide')
