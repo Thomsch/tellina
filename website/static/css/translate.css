@@ -34,10 +34,24 @@
   max-width: 100%; 
 }
 
+.unselectable {
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
 .tooltip-inner > .cmd-expl {
 	font-family: "Lucida Console", Monaco, monospace;
  	text-align: left;
- 	white-space: pre
+ 	white-space: pre;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .code {
